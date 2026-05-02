@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  triton-server:
+    image: nvcr.io/nvidia/tritonserver:23.10-py3
+    container_name: waste_triton_server
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+      - "8002:8002"
+    volumes:
+      - ./model_repository:/models
+    command: ["tritonserver", "--model-repository=/models"]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  app-backend:
+    build: 
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: waste_fastapi_backend
+    ports:
+      - "8080:8000"
+    environment:
+      - TRITON_SERVER_URL=triton-server:8001
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    depends_on:
+      - triton-server
+
+  app-frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: waste_streamlit_frontend
+    ports:
+      - "8501:8501"
+    environment:
+      - BACKEND_URL=http://app-backend:8000/classify
+    depends_on:
+      - app-backend

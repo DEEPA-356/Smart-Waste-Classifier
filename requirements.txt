@@ -1,0 +1,15 @@
+torch
+torchvision
+torchaudio
+tritonclient[all]
+fastapi
+uvicorn
+python-multipart
+langchain
+langchain-google-genai
+onnx
+onnxruntime
+Pillow
+requests
+numpy
+pytest
