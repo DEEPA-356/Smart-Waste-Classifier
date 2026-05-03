@@ -32,6 +32,21 @@ By bridging raw ML predictions with a Generative AI model, this system actively 
 
 ---
 
+## ✨ UI/UX Upgrade (v2.0)
+
+The frontend was completely redesigned with the following enhancements:
+
+| Feature | Details |
+|---|---|
+| **Glassmorphism Aesthetic** | Custom CSS with `backdrop-filter: blur`, frosted glass panels, and gradient backgrounds |
+| **Sidebar** | Persistent panel with *Project Info*, *How it Works*, and SRM Institute / AI & ML Dept. credentials |
+| **Confidence Score** | Softmax probability from Triton exposed as a `st.progress` bar with percentage label |
+| **Animated Buttons** | Gradient CTA button with hover lift transition |
+| **Structured Results** | Color-coded classification header + three-column GenAI advice cards |
+| **Session State** | Results persist across Streamlit re-runs without re-classifying |
+
+---
+
 ## 🚀 Quick Start (Docker Deployment)
 
 The entire architecture is containerized and orchestrated via `docker-compose`.
