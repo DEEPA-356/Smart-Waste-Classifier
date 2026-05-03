@@ -72,33 +72,31 @@ st.markdown("""
 
 # --- Sidebar ---
 with st.sidebar:
-    st.image("https://cdn-icons-png.flaticon.com/512/3299/3299935.png", width=100)
-    st.markdown("## Project Info")
-    st.info("The Smart Waste Classifier uses MobileNetV2 and NVIDIA Triton to accurately classify waste, coupled with Google's Gemini to provide actionable sustainability advice.")
+    st.image("https://cdn-icons-png.flaticon.com/512/3299/3299935.png", width=80)
+    st.markdown("### Smart Waste Classifier")
+    st.markdown("AI-powered waste classification using MobileNetV2 and NVIDIA Triton Inference Server.")
     
-    st.markdown("## How it Works")
+    st.markdown("---")
+    st.markdown("**How it Works**")
     st.markdown("""
-    1. **Upload** an image of a waste item.
-    2. **AI Analysis** classifies it as Organic or Recyclable.
-    3. **GenAI** fetches decomposition timelines and upcycling tips.
+    1. Upload an image
+    2. AI classifies the waste type
+    3. Receive disposal & recycling advice
     """)
     
     st.markdown("---")
-    st.markdown("### Developer Credentials")
     st.markdown("**SRM Institute of Science and Technology**")
-    st.markdown("*AI & ML Department*")
+    st.markdown("Department of AI & Machine Learning")
 
-# --- Main Content ---
+# --- Header ---
 st.markdown("<div class='glass-container'>", unsafe_allow_html=True)
 st.title("♻️ Smart Waste Classifier")
-st.markdown("""
-Welcome to the next-generation AI waste management system! Upload an image below, and our model will instantly classify it and generate personalized sustainability advice in line with SDG 12.
-""")
+st.markdown("Upload an image of a waste item to receive an instant AI classification and disposal guidance.")
 st.markdown("</div>", unsafe_allow_html=True)
 
 # --- Upload Section ---
 st.markdown("<div class='glass-container'>", unsafe_allow_html=True)
-uploaded_file = st.file_uploader("Upload Waste Image Here", type=["jpg", "jpeg", "png"])
+uploaded_file = st.file_uploader("Select an image (JPG or PNG)", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
     col_img, col_btn = st.columns([1, 1])
@@ -109,19 +107,17 @@ if uploaded_file is not None:
         
     with col_btn:
         st.markdown("<br><br>", unsafe_allow_html=True)
-        if st.button("🚀 Analyze Waste"):
-            with st.spinner("Processing through NVIDIA Triton and GenAI..."):
+        if st.button("Analyze"):
+            with st.spinner("Classifying..."):
                 try:
                     files = {"file": (uploaded_file.name, uploaded_file.getvalue(), uploaded_file.type)}
                     response = requests.post(BACKEND_URL, files=files)
                     response.raise_for_status()
-                    data = response.json()
-                    
-                    st.session_state['classification_data'] = data
+                    st.session_state['classification_data'] = response.json()
                 except requests.exceptions.RequestException as e:
-                    st.error(f"Error communicating with the backend: {e}")
+                    st.error(f"Backend error: {e}")
                 except Exception as e:
-                    st.error(f"An error occurred: {e}")
+                    st.error(f"Unexpected error: {e}")
 
 st.markdown("</div>", unsafe_allow_html=True)
 
@@ -130,31 +126,37 @@ if 'classification_data' in st.session_state:
     data = st.session_state['classification_data']
     
     st.markdown("<div class='glass-container'>", unsafe_allow_html=True)
-    st.markdown("## 📊 Classification Results")
+    st.markdown("## Classification Results")
     
     res_col1, res_col2 = st.columns([1, 1])
     
     with res_col1:
         class_color = "#388E3C" if data["classification"] == "Organic" else "#1976D2"
-        st.markdown(f"<h3 style='color: {class_color}; font-size: 2.5rem;'>{data['classification']} Waste</h3>", unsafe_allow_html=True)
+        st.markdown(
+            f"<h3 style='color: {class_color}; font-size: 2rem; margin: 0;'>{data['classification']} Waste</h3>",
+            unsafe_allow_html=True
+        )
         
     with res_col2:
         confidence = data.get("confidence", 0.0)
-        st.markdown(f"<span class='metric-label'>AI Confidence Score: {confidence*100:.1f}%</span>", unsafe_allow_html=True)
+        st.markdown(
+            f"<span class='metric-label'>Confidence: {confidence * 100:.1f}%</span>",
+            unsafe_allow_html=True
+        )
         st.progress(float(confidence))
         
     st.markdown("---")
-    st.markdown("### 🌍 Sustainability Advice")
+    st.markdown("**Disposal Guidance**")
     
     info_col1, info_col2, info_col3 = st.columns(3)
     
     with info_col1:
-        st.info("⏱️ **Decomposition Timeline**\n\n" + data.get("decomposition_timeline", "N/A"))
+        st.info("**Decomposition Timeline**\n\n" + data.get("decomposition_timeline", "N/A"))
         
     with info_col2:
-        st.success("♻️ **Recycling Instructions**\n\n" + data.get("recycling_instructions", "N/A"))
+        st.success("**Recycling Instructions**\n\n" + data.get("recycling_instructions", "N/A"))
         
     with info_col3:
-        st.warning("💡 **Upcycling Idea**\n\n" + data.get("upcycling_idea", "N/A"))
+        st.warning("**Upcycling Idea**\n\n" + data.get("upcycling_idea", "N/A"))
         
     st.markdown("</div>", unsafe_allow_html=True)
