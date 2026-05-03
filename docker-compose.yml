@@ -1,4 +1,4 @@
-version: '3.8'
+# docker-compose.yml — Smart Waste Classifier Stack
 
 services:
   triton-server:
@@ -29,8 +29,10 @@ services:
     environment:
       - TRITON_SERVER_URL=triton-server:8001
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    restart: unless-stopped
     depends_on:
-      - triton-server
+      triton-server:
+        condition: service_started
 
   app-frontend:
     build:
@@ -41,5 +43,7 @@ services:
       - "8501:8501"
     environment:
       - BACKEND_URL=http://app-backend:8000/classify
+    restart: unless-stopped
     depends_on:
-      - app-backend
+      app-backend:
+        condition: service_started
