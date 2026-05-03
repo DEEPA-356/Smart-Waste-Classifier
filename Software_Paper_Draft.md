@@ -21,17 +21,30 @@ The Smart Waste Classifier is designed to automate the identification of waste t
 
 ### 2.3 Backend & GenAI Bridge (Phase 3)
 - **API**: FastAPI provides the RESTful interface.
-- **Orchestration**: The backend pre-processes the image, sends a gRPC request to Triton using `tritonclient`, and retrieves the class prediction.
+- **Orchestration**: The backend pre-processes the image, sends a gRPC request to Triton using `tritonclient`, and retrieves both the class prediction and AI confidence score.
 - **LLM Integration**: LangChain interfaces with the Gemini model. Based on the Triton classification, the LLM generates a structured response containing:
   - Decomposition Timeline
   - Specific Recycling Instructions
   - Upcycling Idea
 
-## 3. Production Deployment (Phase 4)
+
+### 2.4 Interactive Dashboard & UI/UX (Phase 4)
+- **Framework**: Streamlit.
+- **Aesthetic & UX**: A complete UI overhaul utilizing custom CSS to implement a modern "Glassmorphism" design.
+- **Visual Analytics**: AI confidence scores are visually tracked via responsive progress bars to enhance user trust and engagement.
+- **Project Context**: The sidebar persistently displays project info, workflow, and developer credentials (SRM Institute of Science and Technology, AI & ML Department).
+
+## 3. Production Deployment (Phase 5)
 The entire system is containerized using Docker Compose. The `triton-server` container uses GPU pass-through (`deploy.resources.reservations.devices`) for hardware acceleration. A unified deployment script (`export_system.sh`) packages the Docker images, configurations, and models into a `.rar`/`.zip` file for offline distribution and deployment.
 
 ## 4. SDG 12 Mapping
 This project directly addresses SDG Target 12.5 (substantially reduce waste generation through prevention, reduction, recycling and reuse) and Target 12.8 (ensure that people everywhere have the relevant information and awareness for sustainable development and lifestyles in harmony with nature). By providing real-time, context-specific advice on waste decomposition and upcycling, the system actively educates users and promotes a circular economy.
 
-## 5. Conclusion
+## 5. Deployment Artifacts
+The official source code and deployed container images are available below:
+- **GitHub Repository**: [https://github.com/DEEPA-356/Smart-Waste-Classifier](https://github.com/DEEPA-356/Smart-Waste-Classifier)
+- **Docker Hub Backend Image**: `deepa356/waste_fastapi_backend:latest`
+- **Docker Hub Frontend Image**: `deepa356/waste_streamlit_frontend:latest`
+
+## 6. Conclusion
 The Smart Waste Classifier demonstrates a production-ready MLOps workflow. The combination of edge-efficient models, scalable inference servers, and generative AI provides a comprehensive solution for intelligent waste management.

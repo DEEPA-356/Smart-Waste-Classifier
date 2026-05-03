@@ -27,8 +27,8 @@ By bridging raw ML predictions with a Generative AI model, this system actively 
 
 1. **Model Training (Phase 1):** PyTorch-based fine-tuning of MobileNetV2 for high accuracy on edge-capable architectures. The model is exported to `ONNX` format.
 2. **High-Performance Serving (Phase 2):** NVIDIA Triton Inference Server deployed with GPU acceleration (`tensorrt`, `FP16`) to dynamically batch and serve the ONNX model.
-3. **GenAI Bridge Backend (Phase 3):** A FastAPI microservice that utilizes `tritonclient` to get image classifications and uses LangChain to connect to Google's Gemini-3 model to generate sustainability metadata.
-4. **Interactive Dashboard (Phase 4):** A Streamlit frontend providing an intuitive user experience for uploading images and visualizing the AI-generated recycling tips.
+3. **GenAI Bridge Backend (Phase 3):** A FastAPI microservice that utilizes `tritonclient` to get image classifications and confidence scores, and uses LangChain to connect to Google's Gemini-3 model to generate sustainability metadata.
+4. **Interactive Dashboard (Phase 4):** A fully revamped Streamlit frontend utilizing custom CSS for a modern "Glassmorphism" aesthetic. It includes confidence score tracking via progress bars, visually engaging results, and developer credentials (SRM Institute of Science and Technology, AI & ML Department) in the sidebar.
 
 ---
 

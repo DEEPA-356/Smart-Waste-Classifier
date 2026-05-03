@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+python-multipart
+tritonclient[all]
+numpy
+Pillow
+langchain
+langchain-google-genai
+python-dotenv

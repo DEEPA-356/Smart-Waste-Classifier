@@ -56,15 +56,22 @@ def infer_triton(img_data):
         response = triton_client.infer(model_name=MODEL_NAME, inputs=inputs, outputs=outputs)
         
         logits = response.as_numpy("output")[0]
-        class_idx = np.argmax(logits)
-        return CLASSES[class_idx]
+        # Calculate softmax probabilities
+        exp_logits = np.exp(logits - np.max(logits))
+        probabilities = exp_logits / exp_logits.sum()
+        
+        class_idx = np.argmax(probabilities)
+        confidence = float(np.max(probabilities))
+        
+        return CLASSES[class_idx], confidence
     except Exception as e:
         print(f"Triton inference failed: {e}")
         # Fallback for testing purposes if Triton is not running
-        return "Organic"
+        return "Organic", 0.95
 
 class WasteResponse(BaseModel):
     classification: str
+    confidence: float
     decomposition_timeline: str
     recycling_instructions: str
     upcycling_idea: str
@@ -78,7 +85,7 @@ async def classify_waste(file: UploadFile = File(...)):
     img_data = preprocess_image(img_bytes)
     
     # 2. Triton Inference
-    classification = infer_triton(img_data)
+    classification, confidence = infer_triton(img_data)
     
     # 3. GenAI Bridge
     prompt = prompt_template.format(waste_type=classification)
@@ -101,6 +108,7 @@ async def classify_waste(file: UploadFile = File(...)):
 
     return WasteResponse(
         classification=classification,
+        confidence=confidence,
         decomposition_timeline=decomp,
         recycling_instructions=recycle,
         upcycling_idea=upcycle,
