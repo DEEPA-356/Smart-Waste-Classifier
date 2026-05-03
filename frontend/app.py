@@ -85,8 +85,7 @@ with st.sidebar:
     """)
     
     st.markdown("---")
-    st.markdown("**SRM Institute of Science and Technology**")
-    st.markdown("Department of AI & Machine Learning")
+    st.markdown("**Developer:** Deepa K")
 
 # --- Header ---
 st.markdown("<div class='glass-container'>", unsafe_allow_html=True)

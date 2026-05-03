@@ -3,6 +3,9 @@
 ## Abstract
 This document outlines the system design and integration of the "Smart Waste Classifier", an end-to-end MLOps pipeline integrating deep learning for image classification, NVIDIA Triton for high-performance inference, and Generative AI (Gemini) for providing context-aware sustainability advice. The project aligns with Sustainable Development Goal 12 (SDG 12) to ensure sustainable consumption and production patterns.
 
+**Author:** Deepa K
+
+
 ## 1. Introduction
 The Smart Waste Classifier is designed to automate the identification of waste types (Organic vs. Recyclable) using a fine-tuned MobileNetV2 architecture. By deploying this model via NVIDIA Triton and augmenting the classification with a Large Language Model (LLM), the system bridges the gap between raw ML predictions and actionable, user-centric recycling guidance.
 
@@ -32,7 +35,7 @@ The Smart Waste Classifier is designed to automate the identification of waste t
 - **Framework**: Streamlit.
 - **Aesthetic & UX**: A complete UI overhaul utilizing custom CSS to implement a modern "Glassmorphism" design.
 - **Visual Analytics**: AI confidence scores are visually tracked via responsive progress bars to enhance user trust and engagement.
-- **Project Context**: The sidebar persistently displays project info, workflow, and developer credentials (SRM Institute of Science and Technology, AI & ML Department).
+- **Project Context**: The sidebar displays project workflow and developer information (**Deepa K**).
 
 ## 3. Production Deployment (Phase 5)
 The entire system is containerized using Docker Compose. The `triton-server` container uses GPU pass-through (`deploy.resources.reservations.devices`) for hardware acceleration. A unified deployment script (`export_system.sh`) packages the Docker images, configurations, and models into a `.rar`/`.zip` file for offline distribution and deployment.

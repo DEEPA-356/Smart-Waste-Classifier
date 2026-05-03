@@ -4,9 +4,13 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.136.1-green.svg)](https://fastapi.tiangolo.com/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.57.0-red.svg)](https://streamlit.io/)
 [![Triton Inference Server](https://img.shields.io/badge/Triton-23.10-76B900.svg)](https://developer.nvidia.com/nvidia-triton-inference-server)
-[![SDG 12](https://img.shields.io/badge/SDG-12_Responsible_Consumption-orange.svg)](https://sdgs.un.org/goals/goal12)
+[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-deepa356-blue.svg)](https://hub.docker.com/u/deepa356)
+[![Author](https://img.shields.io/badge/Author-Deepa%20K-teal.svg)](https://github.com/DEEPA-356)
 
-An autonomous, end-to-end MLOps pipeline integrating deep learning for image classification, NVIDIA Triton for high-performance inference, and Generative AI (Google Gemini) for providing context-aware sustainability advice. 
+> **Developer:** Deepa K &nbsp;|&nbsp; [DEEPA-356/Smart-Waste-Classifier](https://github.com/DEEPA-356/Smart-Waste-Classifier)
+
+An autonomous, end-to-end MLOps pipeline integrating deep learning for image classification, NVIDIA Triton for high-performance inference, and Generative AI (Google Gemini) for providing context-aware sustainability advice.
+
 
 ---
 
